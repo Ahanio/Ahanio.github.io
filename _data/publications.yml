@@ -1,0 +1,21 @@
+- id: LQ2HQ
+  title: "Self-supervised Depth Denoising Using Lower- and Higher-quality RGB-D sensors"
+  venue: 3DV, 2020
+  description: "Denoising iPhone's depth images by using Kinect depth sensor"
+  project_page: "https://ahanio.github.io/lq2hq/"
+  arxiv: 2009.04776
+  image: tiser_lq2hq.png
+  image_mouseover: lq2hq.mp4
+  authors:
+    - ahan
+    - ilya
+    - kolya
+    - seva
+    - kozlukov
+    - ig
+    - bulat
+    - artem_s
+    - vadim
+    - dima
+
+

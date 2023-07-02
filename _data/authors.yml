@@ -1,0 +1,41 @@
+ahan:
+  first_name: Akhmedkhan (Ahan)
+  last_name: Shabanov
+  website: https://ahanio.github.io
+  is_me: true
+dima:
+  first_name: Dmitry
+  last_name: Ulyanov
+  website: https://dmitryulyanov.github.io/about
+vadim:
+  first_name: Vadim 
+  last_name: Lebedev
+  website: "mailto: vadim.v.lebedev@gmail.com"
+artem_s:
+  first_name: Artsiom
+  last_name: Sanakoyeu
+  website: https://gdude.de/
+bulat:
+  first_name: Bulat
+  last_name: Yakupov
+  website: "mailto: yakupov.bulat@gmail.com"
+ig:
+  first_name: Igor
+  last_name: Pasechnik
+  website: "mailto: pasechnik.ig@gmail.com"
+kozlukov:
+  first_name: Sergei
+  last_name: Kozlukov
+  website: https://scholar.google.com/citations?user=OCo1DVYAAAAJ&hl=en
+seva:
+  first_name: Vsevolod
+  last_name: Poletaev
+  website: https://scholar.google.com/citations?user=dmNHm2IAAAAJ&hl=en
+kolya:
+  first_name: Nikolay
+  last_name: Chinaev
+  website: https://www.linkedin.com/in/nikolai-chinaev-201706174/
+ilya:
+  first_name: Ilya
+  last_name: Krotov
+  website: https://www.linkedin.com/in/ilya-krotov/
