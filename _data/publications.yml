@@ -1,3 +1,18 @@
+- id: BANF
+  title: "BANF: Band-limited Neural Fields for Levels of Detail Reconstruction"
+  venue: Under review
+  description: "We explore how a simple modification to neural fields enables low-pass filtering, facilitating improved frequency decomposition which is crucial for level-of-detail reconstruction."
+  image: banf.png
+  image_mouseover: banf_trimmed.mp4
+  authors:
+    - ahan
+    - shri
+    - cody
+    - lily
+    - daniel
+    - kwang
+    - andrea
+
 - id: LQ2HQ
   title: "Self-supervised Depth Denoising Using Lower- and Higher-quality RGB-D sensors"
   venue: 3DV, 2020
@@ -19,3 +34,4 @@
     - dima
 
 
+#  "https://theialab.github.io/banf/"

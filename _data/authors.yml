@@ -1,5 +1,5 @@
 ahan:
-  first_name: Akhmedkhan (Ahan)
+  first_name: Ahan
   last_name: Shabanov
   website: https://ahanio.github.io
   is_me: true
@@ -39,3 +39,27 @@ ilya:
   first_name: Ilya
   last_name: Krotov
   website: https://www.linkedin.com/in/ilya-krotov/
+shri:
+  first_name: Shrisudhan
+  last_name: Govindarajan
+  website: https://shrisudhang.github.io
+cody:
+  first_name: Cody 
+  last_name: Reading
+  website: https://codyreading.github.io
+lily:
+  first_name: Lily
+  last_name: Goli
+  website: https://lilygoli.github.io
+daniel:
+  first_name: Daniel
+  last_name: Rebain
+  website: http://drebain.com
+kwang:
+  first_name: Kwang
+  last_name: Moo Yi
+  website: https://www.cs.ubc.ca/~kmyi/
+andrea:
+  first_name: Andrea
+  last_name: Tagliasacchi
+  website: https://theialab.ca

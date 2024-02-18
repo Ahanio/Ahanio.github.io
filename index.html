@@ -51,7 +51,7 @@ layout: null
 
         <div class="column">
           <h1 class="title">
-            <b>Hi! I'm {{ site.name }}</b>
+            <b> {{ site.name }}</b>
           </h1>
           <div class="content has-text-justified">
             {{ site.description | markdownify }}
@@ -116,15 +116,14 @@ layout: null
       <div class="publication-block columns">
 
         <div class="column is-2">
-          <!-- <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}"> -->
-            <!-- {% if publication.image_mouseover contains "mp4" %} -->
-            <div class="publication-image">
+          <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
+            {% if publication.image_mouseover contains "mp4" %}
             <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
               <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <!-- {% endif %} -->
-            <!-- <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" /> -->
+            {% endif %}
+            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
           </div>
         </div>
 
@@ -154,10 +153,13 @@ layout: null
             <p class="publication-description">{{ publication.description }}</p>
             <!-- Publication Links. -->
             <div class="publication-links buttons field has-addons">
+              {% if publication.project_page %}
               <a class="external-link button is-small is-ghost" href="{{ publication.project_page }}">
                 <span class="icon"><i class="fas fa-globe-asia"></i></span>
                 <span>Project Page</span>
               </a>
+              {% endif %}
+              {% if publication.arxiv %}
               <a class="external-link button is-small is-ghost" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
                 <span class="icon"><i class="fas fa-file-pdf"></i></span>
                 <span>PDF</span>
@@ -166,6 +168,7 @@ layout: null
                 <span class="icon"><i class="ai ai-arxiv"></i></span>
                 <span>arXiv</span>
               </a>
+              {% endif %}
               {% if publication.github %}
               <a class="external-link button is-small is-ghost" href="https://github.com/{{ publication.github }}">
                 <span class="icon"><i class="fa fab fa-github"></i></span>
