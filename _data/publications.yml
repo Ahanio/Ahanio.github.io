@@ -1,9 +1,11 @@
 - id: BANF
   title: "BANF: Band-limited Neural Fields for Levels of Detail Reconstruction"
-  venue: Under review
+  venue: CVPR 2024
   description: "We explore how a simple modification to neural fields enables low-pass filtering, facilitating improved frequency decomposition which is crucial for level-of-detail reconstruction."
   image: banf.png
+  project_page: "https://theialab.github.io/banf/"
   image_mouseover: banf_trimmed.mp4
+  github: "theialab/banf"
   authors:
     - ahan
     - shri
@@ -32,6 +34,3 @@
     - artem_s
     - vadim
     - dima
-
-
-#  "https://theialab.github.io/banf/"
