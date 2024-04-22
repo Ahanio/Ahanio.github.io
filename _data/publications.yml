@@ -4,6 +4,7 @@
   description: "We explore how a simple modification to neural fields enables low-pass filtering, facilitating improved frequency decomposition which is crucial for level-of-detail reconstruction."
   image: banf.png
   project_page: "https://theialab.github.io/banf/"
+  arxiv: 2404.13024
   image_mouseover: lego_render.mp4
   github: "theialab/banf"
   authors:
