@@ -16,6 +16,26 @@
     - kwang
     - andrea
 
+- id: LangHash
+  title: "Lagrangian Hashing for Compressed Neural Field Representations"
+  venue: ECCV 2024
+  description: "A representation for neural fields combining the characteristics of Eulerian grids (i.e.~InstantNGP), with those that employ points equipped with features as a way to represent information (e.g. 3D Gaussian Splatting or PointNeRF)."
+  image: laghash_teaser.png
+  # project_page: ""
+  # arxiv:
+  # image_mouseover:
+  # github: ""
+  authors:
+    - shri
+    - zeno
+    - ahan
+    - towaki
+    - weiwei
+    - daniel
+    - nicola
+    - kwang
+    - andrea
+
 - id: LQ2HQ
   title: "Self-supervised Depth Denoising Using Lower- and Higher-quality RGB-D sensors"
   venue: 3DV, 2020
