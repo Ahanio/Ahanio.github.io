@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualization Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 20px;
+            max-width: 1000px;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .gallery img.zoomed {
+            position: relative;
+            transform: scale(2); /* Zoom and center */
+            z-index: 10;
+            border-radius: 8px;
+            transition: transform 0.1s ease-in-out;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 5;
+        }
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Beautiful Bugs: Failure Run Gallery</h1>
+    <div class="gallery">
+        <img src="images/img4.png" alt="Failure Run 4" onclick="zoomImage(this)">
+        <img src="images/img5.png" alt="Failure Run 5" onclick="zoomImage(this)">
+        <img src="images/img6.png" alt="Failure Run 6" onclick="zoomImage(this)">
+        <img src="images/img7.png" alt="Failure Run 7" onclick="zoomImage(this)">
+        <img src="images/img1.png" alt="Failure Run 1" onclick="zoomImage(this)">
+        <img src="images/img2.png" alt="Failure Run 2" onclick="zoomImage(this)">
+        <img src="images/img3.png" alt="Failure Run 3" onclick="zoomImage(this)">
+        <img src="images/img8.png" alt="Failure Run 8" onclick="zoomImage(this)">
+        <img src="images/img9.png" alt="Failure Run 9" onclick="zoomImage(this)">
+        <img src="images/img10.png" alt="Failure Run 10" onclick="zoomImage(this)">
+        <img src="images/img17.png" alt="Failure Run 17" onclick="zoomImage(this)">
+        <img src="images/img18.png" alt="Failure Run 18" onclick="zoomImage(this)">
+        <img src="images/img11.png" alt="Failure Run 11" onclick="zoomImage(this)">
+        <img src="images/img12.png" alt="Failure Run 12" onclick="zoomImage(this)">
+        <img src="images/img13.png" alt="Failure Run 13" onclick="zoomImage(this)">
+        <img src="images/img14.png" alt="Failure Run 14" onclick="zoomImage(this)">
+        <img src="images/img15.png" alt="Failure Run 15" onclick="zoomImage(this)">
+        <img src="images/img16.png" alt="Failure Run 16" onclick="zoomImage(this)">
+        <img src="images/img19.png" alt="Failure Run 19" onclick="zoomImage(this)">
+        <!-- Add more images as needed -->
+    </div>
+    <div class="overlay" id="overlay" onclick="closeZoom()"></div>
+
+    <script>
+        function zoomImage(image) {
+            // Toggle zoom class on image
+            image.classList.toggle('zoomed');
+            
+            // Show overlay when image is zoomed in
+            const overlay = document.getElementById('overlay');
+            if (image.classList.contains('zoomed')) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+
+        function closeZoom() {
+            // Close zoomed image and hide overlay when clicking outside
+            const zoomedImages = document.querySelectorAll('.gallery img.zoomed');
+            zoomedImages.forEach(img => img.classList.remove('zoomed'));
+            document.getElementById('overlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
