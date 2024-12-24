@@ -5,7 +5,7 @@
   image: banf.png
   project_page: "https://theialab.github.io/banf/"
   arxiv: 2404.13024
-  image_mouseover: lego_render.mp4
+  image_mouseover: BANF.mp4
   github: "theialab/banf"
   authors:
     - ahan
@@ -21,10 +21,10 @@
   venue: ECCV 2024
   description: "A representation for neural fields combining the characteristics of Eulerian grids (i.e.~InstantNGP), with those that employ points equipped with features as a way to represent information (e.g. 3D Gaussian Splatting or PointNeRF)."
   image: laghash_teaser.png
-  # project_page: ""
-  # arxiv:
-  # image_mouseover:
-  # github: ""
+  project_page: "https://theialab.github.io/laghashes/"
+  arxiv: 2409.05334
+  image_mouseover: teaser_laghash.mp4
+  github: "theialab/lagrangian_hashes"
   authors:
     - shri
     - zeno
