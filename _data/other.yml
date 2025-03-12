@@ -1,0 +1,22 @@
+- id: 3D_Head_Reconstruction
+  title: "3D Head Reconstruction"
+  venue: 2022; US Patent
+  description: "3D reconstruction of the head and hair from 2D images"
+  image: head_recon_teaser.png
+  image_mouseover: head_recon_teaser.mp4
+  project_page: "https://ahanio.github.io/head_recon/"
+
+- id: nucleoli
+  title: "Unsupervised temporal consistency improvement for microscopy video segmentation with Siamese networks"
+  description: "We enhance video segmentation by re-training a CNN in a Siamese setup, optimizing both accuracy on labeled images and consistency across unlabeled frames."
+  image: nucleoli.png
+  biorxiv: 2021.03.25.436993
+  venue: 2021
+  image_mouseover: nucleoli_.mp4
+  github: "kreshuklab/learning-temporal-consistency"
+  authors:
+    - ahan
+    - daja
+    - constantin
+    - sara
+    - anna
