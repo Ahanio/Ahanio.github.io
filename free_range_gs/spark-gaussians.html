@@ -334,7 +334,7 @@
         } finally {
           if (requestId === frameRequestId) {
             frameLoadInFlight = false;
-            if (pendingFrameIndex !== null && pendingFrameIndex !== frameIndex) {
+            if (isPlaying && pendingFrameIndex !== null && pendingFrameIndex !== frameIndex) {
               const queuedIndex = pendingFrameIndex;
               pendingFrameIndex = null;
               void swapToFrame(queuedIndex, { force: true });
@@ -351,6 +351,8 @@
 
       const stopPlayback = () => {
         isPlaying = false;
+        pendingFrameIndex = null;
+        restartHoldUntil = 0;
         frameRequestId += 1;
         frameLoadInFlight = false;
         updateHud();
