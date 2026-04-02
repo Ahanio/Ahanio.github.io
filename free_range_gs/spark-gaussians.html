@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spark Gaussian Viewer</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #f7f7f7;
+        font-family: Arial, sans-serif;
+      }
+
+      #viewer {
+        width: 100%;
+        height: 100%;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      #hud {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        color: rgba(20, 28, 36, 0.8);
+        font-size: 12px;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      #help {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(175, 185, 195, 0.8);
+      }
+
+      #controls {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(175, 185, 195, 0.8);
+      }
+
+      #playToggle {
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 999px;
+        background: #232a31;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        flex: 0 0 auto;
+      }
+
+      #timeline {
+        position: relative;
+        width: 100%;
+        min-width: 0;
+        height: 24px;
+        cursor: pointer;
+        touch-action: none;
+        user-select: none;
+      }
+
+      #timelineTrack {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(140, 155, 170, 0.35);
+        transform: translateY(-50%);
+      }
+
+      #timelineProgress {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 0%;
+        height: 4px;
+        border-radius: 999px;
+        background: #1a73b8;
+        transform: translateY(-50%);
+      }
+
+      #timelineHandle {
+        position: absolute;
+        left: 0%;
+        top: 50%;
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: #1a73b8;
+        border: 2px solid #ffffff;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        transform: translate(-50%, -50%);
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.178.0/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.178.0/examples/jsm/",
+          "@sparkjsdev/spark": "https://sparkjs.dev/releases/spark/0.1.10/spark.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="viewer"></div>
+    <div id="hud">
+      <div id="help">Drag to rotate · Scroll to zoom</div>
+    </div>
+    <div id="controls">
+      <button id="playToggle" type="button" aria-label="Play or pause denoising animation">❚❚</button>
+      <div id="timeline" role="slider" aria-label="Denoising step" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0" tabindex="0">
+        <div id="timelineTrack"></div>
+        <div id="timelineProgress"></div>
+        <div id="timelineHandle"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import * as THREE from "three";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+      import { PackedSplats, SplatMesh } from "@sparkjsdev/spark";
+
+      const container = document.getElementById("viewer");
+      const playToggle = document.getElementById("playToggle");
+      const timeline = document.getElementById("timeline");
+      const timelineProgress = document.getElementById("timelineProgress");
+      const timelineHandle = document.getElementById("timelineHandle");
+      const params = new URLSearchParams(window.location.search);
+      const sceneId = params.get("scene") || "b4b40ccd13284557922c6cac4333411a";
+      const frameCount = Number(params.get("frames") || 51);
+      const syncStart = params.get("syncstart") === "1";
+      const frameMs = Number(params.get("framems") || 70);
+      const objectScale = 2;
+      const cameraConfigByScene = {
+        b4b40ccd13284557922c6cac4333411a: { azimuthDeg: 0, elevationDeg: 12 },
+        "3cfc1d98c84c48499a23f503ab03d9aa": { azimuthDeg: 30, elevationDeg: 0 },
+      };
+      const cameraConfig = cameraConfigByScene[sceneId] || { azimuthDeg: 0, elevationDeg: 0 };
+      const frames = Array.from(
+        { length: frameCount },
+        (_, i) => `./assets/spark_models/${sceneId}/step_${String(i).padStart(3, "0")}.spz`
+      );
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xf7f7f7);
+
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
+      camera.position.set(0, 0, 2.2);
+
+      const splatRoot = new THREE.Group();
+      splatRoot.rotation.x = -Math.PI / 2;
+      splatRoot.scale.setScalar(objectScale);
+      scene.add(splatRoot);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false, powerPreference: "high-performance" });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      container.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.autoRotate = false;
+      controls.enablePan = false;
+      controls.minDistance = 0.9;
+      controls.maxDistance = 5.5;
+      controls.target.set(0, 0, 0);
+      controls.update();
+
+      let activeMesh = null;
+      let isPlaying = !syncStart;
+      let frameIndex = 0;
+      let frameLoadInFlight = false;
+      let pendingFrameIndex = null;
+      let lastSwapAt = 0;
+      let restartHoldUntil = 0;
+      let frameRequestId = 0;
+      let modelCenter = new THREE.Vector3(0, 0, 0);
+      let worldCenter = new THREE.Vector3(0, 0, 0);
+      let modelRadius = 0.8;
+      const packedSplatsCache = new Array(frameCount);
+      const packedSplatsPromises = new Array(frameCount);
+
+      timeline.setAttribute("aria-valuemax", String(frameCount - 1));
+
+      const fitCanvas = () => {
+        const width = container.clientWidth || window.innerWidth || 512;
+        const height = container.clientHeight || window.innerHeight || 512;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height, true);
+      };
+
+      const updateHud = () => {
+        const progress = frameCount > 1 ? (frameIndex / (frameCount - 1)) * 100 : 0;
+        timelineProgress.style.width = `${progress}%`;
+        timelineHandle.style.left = `${progress}%`;
+        timeline.setAttribute("aria-valuenow", String(frameIndex));
+        playToggle.textContent = isPlaying ? "❚❚" : "▶";
+      };
+
+      const computeFrameBounds = async (frameBytes) => {
+        const boundsMesh = new SplatMesh({ fileBytes: frameBytes });
+        await boundsMesh.initialized;
+        const box = boundsMesh.getBoundingBox(false);
+        const center = box.getCenter(new THREE.Vector3());
+        const radius = Math.max(box.getSize(new THREE.Vector3()).length() * 0.5, 0.5);
+        boundsMesh.dispose?.();
+        return { center, radius };
+      };
+
+      const updateCameraFraming = () => {
+        const distance = Math.max(2.0, modelRadius * objectScale * 2.7);
+        const azimuth = THREE.MathUtils.degToRad(cameraConfig.azimuthDeg);
+        const elevation = THREE.MathUtils.degToRad(cameraConfig.elevationDeg);
+        const cameraOffset = new THREE.Vector3(
+          -distance * Math.sin(azimuth) * Math.cos(elevation),
+          distance * Math.sin(elevation),
+          distance * Math.cos(azimuth) * Math.cos(elevation)
+        );
+        worldCenter = splatRoot.localToWorld(modelCenter.clone());
+        camera.position.copy(worldCenter).add(cameraOffset);
+        camera.lookAt(worldCenter);
+        controls.minDistance = Math.max(0.6, distance * 0.35);
+        controls.maxDistance = distance * 3.0;
+        controls.target.copy(worldCenter);
+        controls.update();
+        updateHud();
+      };
+
+      const fetchFrameBytes = async (frameUrl) => {
+        const response = await fetch(frameUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${frameUrl}`);
+        }
+        return new Uint8Array(await response.arrayBuffer());
+      };
+
+      const getPackedSplats = async (index) => {
+        if (packedSplatsCache[index]) {
+          return packedSplatsCache[index];
+        }
+
+        if (!packedSplatsPromises[index]) {
+          const packedSplats = new PackedSplats({ url: frames[index] });
+          packedSplatsPromises[index] = packedSplats.initialized.then(() => {
+            packedSplatsCache[index] = packedSplats;
+            return packedSplats;
+          });
+        }
+
+        return packedSplatsPromises[index];
+      };
+
+      const preloadFrames = async () => {
+        for (let i = 0; i < frameCount; i += 1) {
+          if (!packedSplatsPromises[i]) {
+            void getPackedSplats(i);
+          }
+          await new Promise((resolve) => window.setTimeout(resolve, 8));
+        }
+      };
+
+      const configureMesh = (mesh) => {
+        mesh.quaternion.identity();
+        mesh.position.set(0, 0, 0);
+        mesh.updateMatrixWorld(true);
+        splatRoot.updateMatrixWorld(true);
+      };
+
+      const swapToFrame = async (nextFrameIndex, { force = false } = {}) => {
+        const clampedIndex = Math.min(frameCount - 1, Math.max(0, Math.round(nextFrameIndex)));
+        if (frameLoadInFlight && !force) {
+          pendingFrameIndex = clampedIndex;
+          return;
+        }
+
+        pendingFrameIndex = null;
+        frameRequestId += 1;
+        const requestId = frameRequestId;
+        frameLoadInFlight = true;
+
+        try {
+          const packedSplats = await getPackedSplats(clampedIndex);
+          if (requestId !== frameRequestId) {
+            return;
+          }
+
+          if (!activeMesh) {
+            activeMesh = new SplatMesh({ packedSplats });
+            splatRoot.add(activeMesh);
+            await activeMesh.initialized;
+            configureMesh(activeMesh);
+          } else {
+            activeMesh.packedSplats = packedSplats;
+            activeMesh.numSplats = packedSplats.numSplats;
+            activeMesh.updateGenerator();
+            activeMesh.updateVersion();
+          }
+
+          frameIndex = clampedIndex;
+          lastSwapAt = performance.now();
+          if (frameIndex === frameCount - 1) {
+            restartHoldUntil = lastSwapAt + 2000;
+          }
+          updateHud();
+        } catch (error) {
+          if (error.name !== "AbortError") {
+            console.error(error);
+          }
+        } finally {
+          if (requestId === frameRequestId) {
+            frameLoadInFlight = false;
+            if (pendingFrameIndex !== null && pendingFrameIndex !== frameIndex) {
+              const queuedIndex = pendingFrameIndex;
+              pendingFrameIndex = null;
+              void swapToFrame(queuedIndex, { force: true });
+            }
+          }
+        }
+      };
+
+      const startPlayback = () => {
+        isPlaying = true;
+        lastSwapAt = performance.now();
+        updateHud();
+      };
+
+      const stopPlayback = () => {
+        isPlaying = false;
+        frameRequestId += 1;
+        frameLoadInFlight = false;
+        updateHud();
+      };
+
+      window.addEventListener("message", (event) => {
+        if (event.data?.type === "gaussianStart") {
+          startPlayback();
+        }
+      });
+
+      playToggle.addEventListener("click", () => {
+        if (isPlaying) {
+          stopPlayback();
+        } else {
+          startPlayback();
+        }
+      });
+
+      const setFrameFromTimelineEvent = (event) => {
+        stopPlayback();
+        const rect = timeline.getBoundingClientRect();
+        const ratio = rect.width > 0 ? (event.clientX - rect.left) / rect.width : 0;
+        const nextFrame = Math.round(Math.min(1, Math.max(0, ratio)) * (frameCount - 1));
+        frameIndex = nextFrame;
+        updateHud();
+        void swapToFrame(nextFrame, { force: true });
+      };
+
+      timeline.addEventListener("pointerdown", (event) => {
+        timeline.setPointerCapture(event.pointerId);
+        setFrameFromTimelineEvent(event);
+      });
+
+      timeline.addEventListener("pointermove", (event) => {
+        if (!timeline.hasPointerCapture(event.pointerId)) {
+          return;
+        }
+        setFrameFromTimelineEvent(event);
+      });
+
+      timeline.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+          return;
+        }
+        event.preventDefault();
+        stopPlayback();
+        const delta = event.key === "ArrowLeft" ? -1 : 1;
+        const nextFrame = Math.min(frameCount - 1, Math.max(0, frameIndex + delta));
+        frameIndex = nextFrame;
+        updateHud();
+        void swapToFrame(nextFrame, { force: true });
+      });
+
+
+      window.addEventListener("resize", fitCanvas);
+      fitCanvas();
+
+      const finalFrameBytes = await fetchFrameBytes(frames[frameCount - 1]);
+      const bounds = await computeFrameBounds(finalFrameBytes);
+      modelCenter = bounds.center;
+      modelRadius = bounds.radius;
+      updateCameraFraming();
+      await swapToFrame(0);
+      void preloadFrames();
+      window.parent?.postMessage({ type: "gaussianReady", scene: sceneId }, "*");
+
+      renderer.setAnimationLoop(() => {
+        controls.update();
+        renderer.render(scene, camera);
+
+        if (!isPlaying || frameLoadInFlight || performance.now() - lastSwapAt < frameMs) {
+          return;
+        }
+
+        if (frameIndex === frameCount - 1 && performance.now() < restartHoldUntil) {
+          return;
+        }
+
+        const nextFrame = (frameIndex + 1) % frameCount;
+        void swapToFrame(nextFrame);
+      });
+    </script>
+  </body>
+</html>

@@ -1,3 +1,25 @@
+- id: FreeRangeGS
+  title: "Free-Range Gaussians: Non-Grid-Aligned Generative 3D Gaussian Reconstruction"
+  venue: Under Submission
+  description: "Flow matching directly over 3D Gaussian parameters turns sparse-view reconstruction into a generative process that can synthesize plausible content in unobserved regions."
+  image: free_range_gs_teaser.png
+  image_mouseover: free_range_gs_teaser.mp4
+  project_page: "https://ahanio.github.io/free_range_gs/"
+  authors:
+    - ahan
+    - peter_hedman
+    - ethan_weber
+    - zhengqin_li
+    - denis_rozumny
+    - gael_le_lan
+    - naina_dhingra
+    - lei_luo
+    - andrea_vedaldi
+    - christian_richardt
+    - andrea
+    - bo_zhu
+    - numair_khan
+
 - id: BANF
   title: "BANF: Band-limited Neural Fields for Levels of Detail Reconstruction"
   venue: CVPR 2024

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free-Range Gaussians</title>
+    <meta
+      name="description"
+      content="Project page for Free-Range Gaussians: Non-Grid-Aligned Generative 3D Gaussian Reconstruction."
+    />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LK0PTD9X2P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LK0PTD9X2P', {
+        page_title: 'Free-Range Gaussians',
+        page_path: '/free_range_gs/'
+      });
+      gtag('event', 'subsite_view', {
+        subsite: 'free_range_gs'
+      });
+    </script>
+    <link rel="preload" href="./assets/fonts/source-sans-3-400.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="./assets/fonts/source-sans-3-500.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="./assets/fonts/source-sans-3-600.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="./assets/fonts/source-serif-4-600.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="./assets/fonts/source-serif-4-700.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <p class="hero-kicker">Project Page</p>
+        <h1>Free-Range Gaussians: Non-Grid-Aligned Generative 3D Gaussian Reconstruction</h1>
+        <p class="hero-summary">
+          We perform flow matching directly over 3D Gaussian parameters, turning sparse-view reconstruction
+          into a generative process that can synthesize plausible content in unobserved&nbsp;regions.
+        </p>
+        <div class="authors" aria-label="Authors">
+          <span class="author-item"><a class="author-chip" href="https://ahanio.github.io/" target="_blank" rel="noreferrer">Ahan Shabanov<sup>1,2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://phogzone.com/" target="_blank" rel="noreferrer">Peter Hedman<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://ethanweber.me/" target="_blank" rel="noreferrer">Ethan Weber<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://sites.google.com/view/zhengqinli" target="_blank" rel="noreferrer">Zhengqin Li<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://rozumden.github.io/" target="_blank" rel="noreferrer">Denis Rozumny<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://scholar.google.com/citations?hl=fr&user=QrIyt6sAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noreferrer">Gael Le Lan<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://scholar.google.com/citations?user=QNwhaR8AAAAJ&hl=en" target="_blank" rel="noreferrer">Naina Dhingra<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://scholar.google.com/citations?hl=en&user=CKCjNG4AAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noreferrer">Lei Luo<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://www.robots.ox.ac.uk/~vedaldi/" target="_blank" rel="noreferrer">Andrea Vedaldi<sup>2,3</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://richardt.name/" target="_blank" rel="noreferrer">Christian Richardt<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://taiya.github.io/" target="_blank" rel="noreferrer">Andrea Tagliasacchi<sup>1</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://scholar.google.com/citations?user=GwGsvm0AAAAJ&hl=en" target="_blank" rel="noreferrer">Bo Zhu<sup>2</sup></a></span>
+          <span class="author-item"><a class="author-chip" href="https://nkhan2.github.io" target="_blank" rel="noreferrer">Numair Khan<sup>2</sup></a></span>
+        </div>
+        <div class="affiliations" aria-label="Affiliations">
+          <span class="affiliation-item"><sup>1</sup> Simon Fraser University</span>
+          <span class="affiliation-item"><sup>2</sup> Meta Reality Labs</span>
+          <span class="affiliation-item"><sup>3</sup> University of Oxford</span>
+        </div>
+        <nav class="quick-links" aria-label="Page navigation">
+          <a href="#" onclick="event.preventDefault()">
+            <span class="quick-link-icon" aria-hidden="true">
+              <span class="ai ai-arxiv"></span>
+            </span>
+            <span>arXiv soon</span>
+          </a>
+          <a href="#" onclick="event.preventDefault()">
+            <span class="quick-link-icon" aria-hidden="true">
+              <img src="./assets/icons/paper.svg" alt="" />
+            </span>
+            <span>Paper soon</span>
+          </a>
+        </nav>
+      </header>
+
+      <section class="section section-highlight teaser" id="overview">
+        <div class="gaussian-teaser-flow">
+          <div class="input-flow-banner">Sparse Multi-view Input</div>
+          <div class="gaussian-teaser-row">
+            <div class="teaser-object">
+              <div class="teaser-input-strip">
+                <img class="teaser-input-image teaser-input-image-smaller" src="./assets/teaser_obj_1.png" alt="Sparse input views for object 1." />
+              </div>
+              <span class="input-flow-arrow" aria-hidden="true"></span>
+              <figure class="gaussian-teaser">
+                <iframe
+                  src="./spark-gaussians.html?scene=b4b40ccd13284557922c6cac4333411a&syncstart=1"
+                  title="Interactive Gaussian Splatting Teaser 1"
+                  loading="lazy"
+                  allowfullscreen
+                ></iframe>
+              </figure>
+            </div>
+            <div class="teaser-object">
+              <div class="teaser-input-strip">
+                <img class="teaser-input-image" src="./assets/teaser_obj_2.png" alt="Sparse input views for object 2." />
+              </div>
+              <span class="input-flow-arrow input-flow-arrow-right" aria-hidden="true"></span>
+              <figure class="gaussian-teaser">
+                <iframe
+                  src="./spark-gaussians.html?scene=3cfc1d98c84c48499a23f503ab03d9aa&syncstart=1"
+                  title="Interactive Gaussian Splatting Teaser 2"
+                  loading="lazy"
+                  allowfullscreen
+                ></iframe>
+              </figure>
+            </div>
+          </div>
+          <div class="flow-stage-label">3D Gaussian Denoising</div>
+          <p class="input-flow-subtitle">
+            From a few input images, the model progressively denoises a 3D Gaussian representation.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section-highlight section-group-top">
+        <h2>Abstract</h2>
+        <p>
+          We present <em>Free-Range Gaussians</em>, a multi-view reconstruction method that predicts
+          non-pixel, non-voxel-aligned 3D Gaussians from as few as four images. The model uses flow
+          matching over Gaussian parameters, enabling plausible completions in unobserved regions while
+          avoiding the redundancy of grid-aligned output. To handle larger Gaussian sets efficiently, we
+          introduce a hierarchical patching scheme that groups spatially related Gaussians into joint
+          transformer tokens. We further improve fidelity with timestep-weighted rendering supervision,
+          photometric gradient guidance, and classifier-free guidance.
+        </p>
+      </section>
+
+      <section class="section section-highlight section-group-middle" id="method">
+        <h2>Method</h2>
+        <p class="section-text">
+          Sparse-view reconstruction is treated as conditional generation over 3D Gaussian parameters.
+          A diffusion transformer denoises non-grid-aligned Gaussians from noise, while a level-of-detail
+          tree enables coarse-to-fine training and token patchification.
+        </p>
+        <img class="framed-figure" src="./assets/method.png" alt="Method overview from the paper." />
+        <div class="section-callout">
+          <p>
+            The core idea is to represent the scene with 3D Gaussians that live directly in space, rather
+            than tying each prediction to a pixel- or voxel-aligned grid structure.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section-highlight section-group-bottom">
+        <h2>Why Non-Grid-Aligned Generation?</h2>
+        <p class="section-text">
+          Pixel-aligned methods leave holes in unobserved regions, while voxel-aligned regression tends
+          to blur ambiguous content. The generative formulation produces more complete and sharper
+          reconstructions with far fewer Gaussians.
+        </p>
+        <img class="framed-figure" src="./assets/non-grid-aligned.png" alt="Non-grid-aligned comparison figure from the paper." />
+      </section>
+
+      <section class="section section-highlight section-group-top" id="comparisons">
+        <h2>Comparisons</h2>
+        <p class="section-text">
+          Drag the slider to compare <em>Ours</em> (left, fixed) against baseline methods (right).
+          Switch scenes and select the baseline to inspect failure modes and improvements quickly.
+        </p>
+        <div class="comparison-widget">
+          <div class="scene-group">
+            <span class="scene-group-title">Objaverse</span>
+            <div class="comparison-scenes comparison-scenes-objaverse" role="tablist" aria-label="Select Objaverse object"></div>
+          </div>
+          <div class="scene-group">
+            <span class="scene-group-title">GSO</span>
+            <div class="comparison-scenes comparison-scenes-gso" role="tablist" aria-label="Select GSO object"></div>
+          </div>
+          <div class="comparison-layout" data-split="50">
+            <div class="input-block">
+              <div class="viewer-label viewer-label-input">Input Views</div>
+              <img
+                class="comparison-input-image"
+                src="./assets/slider-scenes/5007696/input.png"
+                alt="Input views."
+                draggable="false"
+              />
+            </div>
+            <div class="results-block">
+              <div class="groundtruth-block">
+                <div class="viewer-label viewer-label-gt">Ground Truth</div>
+                <img
+                  class="comparison-image comparison-gt"
+                  src="./assets/slider-scenes/5007696/gt.png"
+                  alt="Ground truth views."
+                  draggable="false"
+                />
+              </div>
+              <div class="comparison-stage">
+                <div class="viewer-label viewer-label-left">Ours</div>
+                <div class="viewer-label viewer-label-right" data-side="right">LaRa</div>
+                <img
+                  class="comparison-image comparison-base"
+                  src="./assets/slider-scenes/5007696/ours.png"
+                  alt="Ours image."
+                  draggable="false"
+                />
+                <div class="comparison-layer comparison-right">
+                  <img
+                    class="comparison-image"
+                    src="./assets/slider-scenes/5007696/lara.png"
+                    alt="Baseline image."
+                    draggable="false"
+                  />
+                </div>
+                <div class="comparison-divider">
+                  <button class="comparison-handle" type="button" aria-label="Drag comparison slider"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method-controls">
+            <div class="method-group" data-side="right">
+              <span class="method-title">Baseline</span>
+              <div class="method-buttons">
+                <button class="method-btn is-active" type="button" data-method="lara">LaRa</button>
+                <button class="method-btn" type="button" data-method="gslrm">GS-LRM</button>
+                <button class="method-btn" type="button" data-method="lgm">LGM</button>
+                <button class="method-btn" type="button" data-method="reconviagen">ReconViaGen</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-highlight section-group-bottom" id="consistency">
+        <h2>Generation vs. Reconstruction</h2>
+        <p class="section-text">
+          TRELLIS can produce sharp outputs, but often drifts from sparse-view evidence.
+          Free-Range Gaussians better preserves cross-view consistency.
+        </p>
+        <div class="trellis-widget">
+          <div class="trellis-scenes trellis-scenes-all" role="tablist" aria-label="Select object"></div>
+          <div class="trellis-layout">
+            <div class="trellis-input-block">
+              <div class="viewer-label viewer-label-input-full">Input Views</div>
+              <img class="trellis-image trellis-input-image" src="./assets/trellis_compar/5022873/input.png" alt="Input views." draggable="false" />
+            </div>
+            <div class="trellis-results">
+              <div class="trellis-row">
+                <div class="viewer-label">Ground Truth</div>
+                <img class="trellis-image trellis-gt-image" src="./assets/trellis_compar/5022873/gt.png" alt="Ground truth." draggable="false" />
+              </div>
+              <div class="trellis-row">
+                <div class="viewer-label">Ours</div>
+                <img class="trellis-image trellis-ours-image" src="./assets/trellis_compar/5022873/ours.png" alt="Our predictions." draggable="false" />
+              </div>
+              <div class="trellis-row">
+                <div class="viewer-label">TRELLIS</div>
+                <img class="trellis-image trellis-pred-image" src="./assets/trellis_compar/5022873/trellis.png" alt="TRELLIS predictions." draggable="false" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>BibTeX</h2>
+        <pre><code>@article{free_range_gaussians_2026,
+  title   = {Free-Range Gaussians: Non-Grid-Aligned Generative 3D Gaussian Reconstruction},
+  author  = {Ahan Shabanov and Peter Hedman and Ethan Weber and Zhengqin Li and Denis Rozumny and Gael Le Lan and Naina Dhingra and Lei Luo and Andrea Vedaldi and Christian Richardt and Andrea Tagliasacchi and Bo Zhu and Numair Khan},
+  journal = {arXiv},
+  year    = {2026},
+  note    = {arXiv ID and link to be added}
+}</code></pre>
+      </section>
+
+    </main>
+    <script>
+      (() => {
+        const iframes = Array.from(document.querySelectorAll('.gaussian-teaser iframe'));
+        const readyWindows = new Set();
+        let started = false;
+
+        window.addEventListener('message', (event) => {
+          const msg = event.data || {};
+          if (msg.type !== 'gaussianReady' || started) return;
+          readyWindows.add(event.source);
+          if (readyWindows.size >= iframes.length && iframes.length > 0) {
+            started = true;
+            for (const frame of iframes) {
+              frame.contentWindow?.postMessage({ type: 'gaussianStart' }, '*');
+            }
+          }
+        });
+      })();
+    </script>
+
+  </body>
+</html>

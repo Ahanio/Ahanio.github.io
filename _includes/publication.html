@@ -1,7 +1,7 @@
 <div class="flex flex-col md:flex-row gap-6 py-6 border-b border-border-subtle last:border-b-0">
   <div class="w-full md:w-1/5 flex-shrink-0">
     {% assign preview_bg = "bg-surface-muted" %}
-    {% if include.pub.id == "BANF" %}
+    {% if include.pub.id == "BANF" or include.pub.id == "FreeRangeGS" %}
       {% assign preview_bg = "bg-transparent" %}
     {% endif %}
     <div class="publication-mousecell relative overflow-hidden rounded-lg aspect-square {{ preview_bg }} flex items-center justify-center">
@@ -13,6 +13,9 @@
       {% assign preview_scale = "object-cover" %}
       {% if include.pub.id == "BANF" %}
         {% assign preview_scale = "object-contain scale-[0.92]" %}
+      {% endif %}
+      {% if include.pub.id == "FreeRangeGS" %}
+        {% assign preview_scale = "object-contain" %}
       {% endif %}
       {% if include.pub.id == "3D_Head_Reconstruction" %}
         {% assign preview_scale = "object-contain scale-[0.88]" %}
@@ -26,10 +29,14 @@
         playsinline
       ></video>
       {% elsif include.pub.image %}
+      {% assign image_scale = "object-cover" %}
+      {% if include.pub.id == "FreeRangeGS" %}
+        {% assign image_scale = "object-contain" %}
+      {% endif %}
       <img
         src="{{ '/images/' | append: include.pub.image | relative_url }}"
         alt="{{ include.pub.title }}"
-        class="w-full h-full object-cover"
+        class="w-full h-full {{ image_scale }}"
       >
       {% endif %}
     </div>

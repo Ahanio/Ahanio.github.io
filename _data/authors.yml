@@ -63,6 +63,50 @@ andrea:
   first_name: Andrea
   last_name: Tagliasacchi
   website: https://theialab.ca
+peter_hedman:
+  first_name: Peter
+  last_name: Hedman
+  website: https://phogzone.com/
+ethan_weber:
+  first_name: Ethan
+  last_name: Weber
+  website: https://ethanweber.me/
+zhengqin_li:
+  first_name: Zhengqin
+  last_name: Li
+  website: https://sites.google.com/view/zhengqinli
+denis_rozumny:
+  first_name: Denis
+  last_name: Rozumny
+  website: https://rozumden.github.io/
+gael_le_lan:
+  first_name: Gael
+  last_name: Le Lan
+  website: https://scholar.google.com/citations?hl=fr&user=QrIyt6sAAAAJ&view_op=list_works&sortby=pubdate
+naina_dhingra:
+  first_name: Naina
+  last_name: Dhingra
+  website: https://scholar.google.com/citations?user=QNwhaR8AAAAJ&hl=en
+lei_luo:
+  first_name: Lei
+  last_name: Luo
+  website: https://scholar.google.com/citations?hl=en&user=CKCjNG4AAAAJ&view_op=list_works&sortby=pubdate
+andrea_vedaldi:
+  first_name: Andrea
+  last_name: Vedaldi
+  website: https://www.robots.ox.ac.uk/~vedaldi/
+christian_richardt:
+  first_name: Christian
+  last_name: Richardt
+  website: https://richardt.name/
+bo_zhu:
+  first_name: Bo
+  last_name: Zhu
+  website: https://scholar.google.com/citations?user=GwGsvm0AAAAJ&hl=en
+numair_khan:
+  first_name: Numair
+  last_name: Khan
+  website: https://nkhan2.github.io
 zeno:
   first_name: Zeno
   last_name: Sambugaro
