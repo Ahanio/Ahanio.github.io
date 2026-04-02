@@ -4,7 +4,7 @@
   description: "Flow matching directly over 3D Gaussian parameters turns sparse-view reconstruction into a generative process that can synthesize plausible content in unobserved regions."
   image: free_range_gs_teaser.png
   image_mouseover: free_range_gs_teaser.mp4
-  project_page: "https://ahanio.github.io/free_range_gs/"
+  project_page: "https://free-range-gaussians.github.io/"
   authors:
     - ahan
     - peter_hedman
