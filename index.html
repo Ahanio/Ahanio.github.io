@@ -1,290 +1,93 @@
 ---
-layout: null
+layout: default
+title: Ahan Shabanov
 ---
-<!DOCTYPE html>
-<html lang="en-US">
 
-<head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<section class="py-10 md:py-14 bg-surface">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="flex flex-col items-center text-center md:text-left md:flex-row md:items-start gap-8">
+      <div class="flex-shrink-0">
+        <img
+          src="{{ '/images/portrait.jpg' | relative_url }}"
+          alt="{{ site.name }}"
+          class="w-56 h-56 md:w-64 md:h-64 object-cover"
+        >
+      </div>
 
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  <title>{{ site.name }}</title>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', '{{ site.google_analytics }}');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="{{ '/css/fontawesome.all.min.css' | relative_url }}" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
-  <link href="{{ '/css/bulma.min.css' | relative_url }}" rel="stylesheet">
-  <link href="{{ '/css/index.css' | relative_url }}" rel="stylesheet">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script defer src="{{ '/js/fontawesome.all.min.js' | relative_url }}"></script>
-  <script src="{{ '/js/index.js' | relative_url }}"></script>
-
-  <link rel="icon" href="https://ahanio.github.io/favicon.ico">
-
-</head>
-
-<body>
-
-  <section class="hero">
-    <div class="hero-body container is-max-desktop">
-      <div class="columns is-vcentered">
-
-        <div class="column is-4">
-          <div class="portrait">
-            <img src="{{ '/images/portrait.jpg' | relative_url }}" />
-          </div>
+      <div class="flex-1">
+        <h1 class="font-serif text-3xl md:text-4xl font-medium text-text not-italic">
+          {{ site.name }}
+        </h1>
+        <div class="text-text-body mt-4 max-w-prose leading-relaxed prose">
+          {{ site.description | markdownify }}
         </div>
 
-        <div class="column">
-          <h1 class="title">
-            <b> {{ site.name }}</b>
-          </h1>
-          <div class="content has-text-justified">
-            {{ site.description | markdownify }}
-            <div class="buttons">
-              <!-- <a class="external-link button is-light" href="cv.html">
-                <span class="icon"><i class="fas fa-file"></i></span>
-                <span>CV</span>
-              </a> -->
-              <a class="external-link button is-light"
-                href="mailto:{{ site.email }}">
-                <span class="icon"><i class="fas fa-envelope"></i></span>
-                <span>Email</span>
-              </a>
-
-              <a class="external-link button is-light"
-                href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
-                <span class="icon"><i class="ai ai-google-scholar"></i></span>
-                <span>Scholar</span>
-              </a>
-
-              <a class="external-link button is-light" href="https://github.com/{{ site.github_username }}">
-                <span class="icon"><i class="fab fa-github"></i></span>
-                <span>Github</span>
-              </a>
-
-              <a class="external-link button is-light" href="https://twitter.com/{{ site.twitter_username }}">
-                <span class="icon"><i class="fab fa-twitter"></i></span>
-                <span>Twitter</span>
-              </a>
-            </div>
-
-          </div>
+        <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
+          <a href="mailto:{{ site.email }}" class="inline-flex items-center text-text-muted hover:text-text font-sans text-sm no-underline">
+            {% include icons/envelope.html class="w-4 h-4 mr-1.5" %}
+            Email
+          </a>
+          <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="inline-flex items-center text-text-muted hover:text-text font-sans text-sm no-underline">
+            <i class="ai ai-google-scholar mr-1.5"></i>
+            Scholar
+          </a>
+          <a href="https://github.com/{{ site.github_username }}" class="inline-flex items-center text-text-muted hover:text-text font-sans text-sm no-underline">
+            {% include icons/github.html class="w-4 h-4 mr-1.5" %}
+            GitHub
+          </a>
+          <a href="https://twitter.com/{{ site.twitter_username }}" class="inline-flex items-center text-text-muted hover:text-text font-sans text-sm no-underline">
+            {% include icons/twitter.html class="w-4 h-4 mr-1.5" %}
+            Twitter
+          </a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- News. -->
-  <div class="hr">
-    <div class="container">
-      <hr>
     </div>
   </div>
+</section>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-
-      <h2 class="title is-3">News</h2>
-      <div class="content">
-        <ul>
-          {% for news in site.data.news %}
-          <li>
-            <b>{{ news.date }}</b>: {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <h2 class="title is-3">Publications</h2>
-      {% for publication in site.data.publications %}
-      <div class="publication-block columns">
-
-        <div class="column is-2">
-          <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
-            {% if publication.image_mouseover contains "mp4" %}
-            <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
-              <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            {% endif %}
-            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="content">
-            <h3 class="publication-title"><a href="{{ publication.project_page }}">{{ publication.title }}</a></h3>
-            <div class="publication-authors">
-              {% for author_id in publication.authors %}
-              {% assign author = site.data.authors[author_id] %}
-              <span class="author-block {% if author.is_me %}author-me{% endif %}">
-                {% if author.is_me %}
-                {{ author.first_name }} {{author.middle_name}} {{ author.last_name }}{% if forloop.last == false %},{%
-                endif %}
-                {% else %}
-                <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name
-                  }}</a>{% if forloop.last == false %},{% endif %}
-                {% endif %}
-              </span>
-              {% endfor %}
-            </div>
-            <div class="publication-venue">
-              <span>{{ publication.venue }}</span>
-              {% for award in publication.awards %}
-                <span class="publication-venue-emph">{{ award }}<span>
-              {% endfor %}
-            </div>
-            <p class="publication-description">{{ publication.description }}</p>
-            <!-- Publication Links. -->
-            <div class="publication-links buttons field has-addons">
-              {% if publication.project_page %}
-              <a class="external-link button is-small is-ghost" href="{{ publication.project_page }}">
-                <span class="icon"><i class="fas fa-globe-asia"></i></span>
-                <span>Project Page</span>
-              </a>
-              {% endif %}
-              {% if publication.arxiv %}
-              <!-- <a class="external-link button is-small is-ghost" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
-                <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                <span>PDF</span>
-              </a> -->
-              <a class="external-link button is-small is-ghost" href="https://arxiv.org/abs/{{ publication.arxiv }}">
-                <span class="icon"><i class="ai ai-arxiv"></i></span>
-                <span>arXiv</span>
-              </a>
-              {% endif %}
-              {% if publication.github %}
-              <a class="external-link button is-small is-ghost" href="https://github.com/{{ publication.github }}">
-                <span class="icon"><i class="fa fab fa-github"></i></span>
-                <span>Code</span>
-              </a>
-              {% endif %}
-            </div>
-            <!--/ Publication Links. -->
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-
-      <h2 class="title is-3">Other Projects</h2>
-      {% for publication in site.data.other %}
-      <div class="publication-block columns">
-
-        <div class="column is-2">
-          <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
-            {% if publication.image_mouseover contains "mp4" %}
-            <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
-              <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            {% endif %}
-            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="content">
-            <h3 class="publication-title"><a href="{{ publication.project_page }}">{{ publication.title }}</a></h3>
-            <div class="publication-authors">
-              {% for author_id in publication.authors %}
-              {% assign author = site.data.authors[author_id] %}
-              <span class="author-block {% if author.is_me %}author-me{% endif %}">
-                {% if author.is_me %}
-                {{ author.first_name }} {{author.middle_name}} {{ author.last_name }}{% if forloop.last == false %},{%
-                endif %}
-                {% else %}
-                <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name
-                  }}</a>{% if forloop.last == false %},{% endif %}
-                {% endif %}
-              </span>
-              {% endfor %}
-            </div>
-            <div class="publication-venue">
-              <span>{{ publication.venue }}</span>
-              {% for award in publication.awards %}
-                <span class="publication-venue-emph">{{ award }}<span>
-              {% endfor %}
-            </div>
-            <p class="publication-description">{{ publication.description }}</p>
-            <!-- Publication Links. -->
-            <div class="publication-links buttons field has-addons">
-              {% if publication.project_page %}
-              <a class="external-link button is-small is-ghost" href="{{ publication.project_page }}">
-                <span class="icon"><i class="fas fa-globe-asia"></i></span>
-                <span>Project Page</span>
-              </a>
-              {% endif %}
-              {% if publication.arxiv %}
-              <a class="external-link button is-small is-ghost" href="https://arxiv.org/abs/{{ publication.arxiv }}">
-                <span class="icon"><i class="ai ai-arxiv"></i></span>
-                <span>arXiv</span>
-              </a>
-              {% endif %}
-              {% if publication.biorxiv %}
-              <a class="external-link button is-small is-ghost" href="https://www.biorxiv.org/content/biorxiv/early/2021/03/25/2021.03.25.436993.full.pdf">
-                <span class="icon"><i class="ai ai-arxiv"></i></span>
-                <span>BioRxiv</span>
-              </a>
-              {% endif %}
-              {% if publication.github %}
-              <a class="external-link button is-small is-ghost" href="https://github.com/{{ publication.github }}">
-                <span class="icon"><i class="fa fab fa-github"></i></span>
-                <span>Code</span>
-              </a>
-              {% endif %}
-            </div>
-            <!--/ Publication Links. -->
-          </div>
-        </div>
+{% if site.data.news and site.data.news.size > 0 %}
+<section class="py-6 md:py-8 bg-surface">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="mb-3">
+      <h2 class="font-display text-xl md:text-2xl font-semibold text-text">News</h2>
+    </div>
+    <div class="h-32 overflow-y-auto pr-2">
+      {% for item in site.data.news %}
+      <div class="flex flex-col md:flex-row md:gap-4 border-b border-border-subtle py-2">
+        <div class="w-full md:w-32 flex-shrink-0 text-xs md:text-sm text-text-muted font-sans">{{ item.date }}</div>
+        <div class="text-sm text-text-body leading-snug">{{ item.description | markdownify | remove: '<p>' | remove: '</p>' }}</div>
       </div>
       {% endfor %}
     </div>
-  </section>
+  </div>
+</section>
+{% endif %}
 
+<section class="py-10 md:py-12 bg-surface">
+  <div class="max-w-4xl mx-auto px-6">
+    <h2 class="font-display text-2xl font-semibold text-text mb-8">Publications</h2>
+    {% for pub in site.data.publications %}
+      {% include publication.html pub=pub %}
+    {% endfor %}
+    {% for pub in site.data.other %}
+      {% include publication.html pub=pub %}
+    {% endfor %}
+  </div>
+</section>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="content footer-links has-text-centered">
-        <a href="mailto:{{ site.email }}">
-          <i class="fas fa-envelope"></i>
-        </a>
-        <a class="external-link" href="https://github.com/{{ site.github_username }}">
-          <i class="fab fa-github"></i>
-        </a>
-        <a class="external-link" href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
-          <i class="ai ai-google-scholar"></i>
-        </a>
-      </div>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-8">
-          <div class="content">
-            <p>
-              Borrowed from <a href="https://keunhong.com">Keunhong</a>.
-              <br>
-              <br>
-              <a href="failure_art/gallery.html">Failure art gallery</a>
-            </p>
-          </div>
+<section class="py-10 md:py-12 bg-surface">
+  <div class="max-w-4xl mx-auto px-6">
+    <a href="{{ '/failure_art/gallery.html' | relative_url }}" class="group block no-underline border border-border-subtle rounded-lg p-5 md:p-6 bg-surface hover:border-border transition-colors duration-200">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h2 class="font-display text-xl md:text-2xl font-semibold text-text">Failure Art Gallery</h2>
+          <p class="text-text-body mt-2 max-w-2xl text-sm md:text-base">A gallery of interesting mistakes, broken generations, and unexpected visual artifacts.</p>
+        </div>
+        <div class="inline-flex items-center text-text-muted group-hover:text-text font-sans text-sm">
+          {% include icons/globe.html class="w-5 h-5 mr-2" %}
+          Open Gallery
         </div>
       </div>
-    </div>
-  </footer>
-
-</body>
-
-</html>
+    </a>
+  </div>
+</section>

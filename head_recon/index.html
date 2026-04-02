@@ -1,180 +1,229 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="BANF: Band-limited Neural Fields for Levels of Detail Reconstruction">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BANF: Band-limited Neural Fields for Levels of Detail Reconstruction</title>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QTDHTE"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
+  <meta name="description" content="In-the-wild 3D head reconstruction from multi-view images, including face and hair geometry.">
+  <title>In-the-wild 3D Head Reconstruction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Crimson+Pro:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --surface: #fcfcfa;
+      --surface-strong: #f4f2ec;
+      --text: #171717;
+      --text-body: #444;
+      --text-muted: #6d6d6d;
+      --border: #e7e2d8;
+      --max-width: 960px;
+      --radius: 18px;
     }
 
-    gtag('js', new Date());
+    * {
+      box-sizing: border-box;
+    }
 
-    gtag('config', 'G-QTDHTEVJ4B');
-  </script>
+    body {
+      margin: 0;
+      font-family: "Crimson Pro", Georgia, serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(223, 217, 205, 0.35), transparent 28rem),
+        linear-gradient(180deg, #fff 0%, var(--surface) 100%);
+    }
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+    a {
+      color: inherit;
+    }
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+    .hero {
+      display: grid;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      font-family: "Source Sans 3", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin: 0 0 14px;
+    }
+
+    h1, h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      line-height: 0.95;
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 18ch;
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(2rem, 4.2vw, 3.35rem);
+      font-weight: 300;
+      line-height: 1.05;
+    }
+
+    .lead {
+      max-width: 42rem;
+      margin-top: 18px;
+      font-size: 1.18rem;
+      line-height: 1.6;
+      color: var(--text-body);
+    }
+
+    .hero-card,
+    .section-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 40px rgba(20, 20, 20, 0.05);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card {
+      padding: 18px;
+    }
+
+    video,
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: calc(var(--radius) - 4px);
+    }
+
+    .section {
+      margin-top: 36px;
+    }
+
+    .section-card {
+      padding: 28px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 18px;
+    }
+
+    .section-card p {
+      margin: 0;
+      color: var(--text-body);
+      font-size: 1.12rem;
+      line-height: 1.66;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: start;
+    }
+
+    .note {
+      font-family: "Source Sans 3", sans-serif;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-top: 14px;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: #2a2a2a;
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        padding: 28px 18px 52px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-card {
+        padding: 22px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-3 publication-title">Face + Hair reconstruction</h1>
-
-        </div>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Project</p>
+        <h1>In-the-wild<br>3D head reconstruction</h1>
+        <p class="lead">
+          A production-focused system for reconstructing face and hair geometry from unconstrained multi-view captures. The emphasis was on stable real-world behavior rather than curated lab conditions.
+        </p>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <center>
-        <video id="teaser" autoplay muted loop playsinline center width="80%">
-          <source src="./static/videos/teaser.mp4"
-                  type="video/mp4">
-      </center>
-      </video>
-      <!-- <img src="static/images/teaser_large.gif" loop></img> -->
-      <!-- <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
-      </h2> -->
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Description</h2>
-        <div class="content has-text-justified">
-          I worked on the problem of 3D reconstruction of the face and hair from 
-          images and camera poses. Given a set of 2D images, 
-          the goal was to recover the underlying 3D geometry. 
-          Training data consisted of 3D head scans captured with phones. 
-          The pipeline, illustrated below, first extracted features from the images and 
-          then used a small MLP to predict an occupancy field in canonical space, 
-          combining neural networks with traditional computer vision techniques to achieve accurate reconstruction.
-          The solution was integrated into production, delivering robust results for in-the-wild scenarios
-
-
-        </div>
-        <img src="static/images/pipeline.png" loop></img>
+      <div class="hero-card">
+        <video autoplay muted loop playsinline>
+          <source src="./static/videos/teaser.mp4" type="video/mp4">
+        </video>
       </div>
-    </div>
-    <!--/ Abstract. -->
+    </section>
 
-    <!-- Paper video. -->
-    <!-- <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <section class="section">
+      <div class="grid">
+        <div class="section-card">
+          <h2>Overview</h2>
+          <p>
+            This work addressed 3D reconstruction of the full head, including hair, from posed image sets captured in the wild. The pipeline combined learned image features with a compact implicit model that predicted occupancy in a canonical space, while classical geometry and camera-processing components kept the solution practical and robust.
+          </p>
+          <p style="margin-top: 16px;">
+            The system was designed for deployment, so the key constraint was not just visual quality but consistency across noisy inputs, changing lighting, imperfect views, and everyday mobile capture conditions.
+          </p>
         </div>
-      </div>
-    </div> -->
-    <!--/ Paper video. -->
-  </div>
-</section>
 
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-    <!-- <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
+        <div class="section-card">
+          <h2>Result</h2>
           <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
+            The method shipped into a product pipeline for avatar creation and supported reliable head and hair reconstruction from consumer imagery.
           </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+          <p class="note">
+            Patent: US Patent 11,494,963
           </p>
         </div>
       </div>
-    </div> -->
+    </section>
 
-  </div>
-</section>
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@patent{ulianov2022methods,
-      title={Methods and systems for generating a resolved threedimensional (R3D) avatar},
-      author={Ulianov, Dmitrii and Pasechnik, Igor and Shabanov, Ahmedkhan and Lebedev, Vadim and Krotov, Ilya and Chinaev, Nikolai and Yakupov, Bulat and Poletaev, Vsevolod},
-      year={2022},
-      publisher={Google Patents},
-      note={US Patent 11,494,963}
-    }</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-    <div class="columns is-centered">
-      <div class="column is-4">
-        <div class="content" >
-          <p>
-            This webpage template is adapted from
-            <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> 
-          </p>
-        </div>
+    <section class="section">
+      <div class="section-card">
+        <h2>Pipeline</h2>
+        <img src="./static/images/pipeline.png" alt="Pipeline overview for in-the-wild 3D head reconstruction">
       </div>
-    </div>
-  </div>
-</footer>
+    </section>
 
+    <section class="section">
+      <h2>BibTeX</h2>
+      <pre><code>@patent{ulianov2022methods,
+  title={Methods and systems for generating a resolved threedimensional (R3D) avatar},
+  author={Ulianov, Dmitrii and Pasechnik, Igor and Shabanov, Ahmedkhan and Lebedev, Vadim and Krotov, Ilya and Chinaev, Nikolai and Yakupov, Bulat and Poletaev, Vsevolod},
+  year={2022},
+  publisher={Google Patents},
+  note={US Patent 11,494,963}
+}</code></pre>
+    </section>
+  </main>
 </body>
 </html>

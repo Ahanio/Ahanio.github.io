@@ -22,7 +22,7 @@ title: Ahan Shabanov
 name: Akhmedkhan (Ahan) Shabanov
 position: PhD student
 email: sha.ahan10@gmail.com
-description: >-
+description: |
   Hi! I am a PhD student at the [GrUVi](https://gruvi.cs.sfu.ca/people/) lab of [SFU](https://www.sfu.ca) advised by [Andrea Tagliasacchi](https://taiya.github.io) in a beautiful Vancouver. I work on 3D computer vision.
 
 
@@ -37,12 +37,9 @@ google_scholar: pKhP8_cAAAAJ
 google_analytics: G-LK0PTD9X2P
 
 # Build settings
-theme: minima
 plugins:
   - jekyll-feed
-
-sass:
-  style: compact
+  - jekyll-tailwindcss
 
 # Exclude from processing.
 # The following items will not be processed, by default.

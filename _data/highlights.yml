@@ -1,0 +1,23 @@
+- title: "BANF"
+  description: "Band-limited neural fields for level-of-detail reconstruction."
+  image: banf.png
+  video: BANF.mp4
+  url: "https://theialab.github.io/banf/"
+
+- title: "LangHash"
+  description: "Compressed neural field representations with Lagrangian hashing."
+  image: laghash_teaser.png
+  video: teaser_laghash.mp4
+  url: "https://theialab.github.io/laghashes/"
+
+- title: "LQ2HQ"
+  description: "Self-supervised depth denoising across RGB-D sensors."
+  image: tiser_lq2hq.png
+  video: lq2hq.mp4
+  url: "https://ahanio.github.io/lq2hq/"
+
+- title: "Head Recon"
+  description: "3D head and hair reconstruction from in-the-wild images."
+  image: head_recon_teaser.png
+  video: head_recon_teaser.mp4
+  url: "https://ahanio.github.io/head_recon/"
