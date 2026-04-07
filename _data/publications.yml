@@ -5,6 +5,7 @@
   image: free_range_gs_teaser.png
   image_mouseover: free_range_gs_teaser.mp4
   project_page: "https://free-range-gaussians.github.io/"
+  arxiv: 2604.04874
   authors:
     - ahan
     - peter_hedman
