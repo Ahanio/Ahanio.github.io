@@ -1,6 +1,6 @@
 - id: FreeRangeGS
   title: "Free-Range Gaussians: Non-Grid-Aligned Generative 3D Gaussian Reconstruction"
-  venue: Under Submission
+  venue: ECCV 2026
   description: "Flow matching directly over 3D Gaussian parameters turns sparse-view reconstruction into a generative process that can synthesize plausible content in unobserved regions."
   image: free_range_gs_teaser.png
   image_mouseover: free_range_gs_teaser.mp4

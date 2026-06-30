@@ -23,9 +23,9 @@ name: Akhmedkhan (Ahan) Shabanov
 position: PhD student
 email: sha.ahan10@gmail.com
 description: |
-  Hi! I am a PhD student at the [GrUVi](https://gruvi.cs.sfu.ca/people/) lab at [Simon Fraser University](https://www.sfu.ca), advised by [Andrea Tagliasacchi](https://taiya.github.io), in beautiful Vancouver. I work on 3D computer vision.
+  Hi! I'm a PhD student at [Simon Fraser University](https://www.sfu.ca) in Vancouver, advised by [Andrea Tagliasacchi](https://taiya.github.io). I work on 3D computer vision.
 
-  Previously, I was a research intern at [Meta](https://research.facebook.com/), where I worked on generative 3D reconstruction under the mentorship of [Numair Khan](https://nkhan2.github.io). Before that, I was a research engineer and founding team member at [Avaturn (formerly In3D)](https://avaturn.me), where I worked with [Dmitry Ulyanov](https://dmitryulyanov.github.io/about) on 3D human body and face reconstruction from in-the-wild images. Even earlier, I received my BSc and MSc degrees in Applied Mathematics and Physics from the [Moscow Institute of Physics and Technology](https://mipt.ru/english/).
+  During my PhD, I spent time as a research intern at [Meta](https://research.facebook.com/) in Zurich, focusing on generative 3D reconstruction. Before that, I was a research engineer and founding member at [Avaturn](https://avaturn.me), collaborating with [Dmitry Ulyanov](https://scholar.google.com/citations?user=du1SBVMAAAAJ&hl=en) on 3D human body and face reconstruction from in-the-wild images. Earlier, I did my BSc and MSc in Applied Mathematics and Physics at the [Moscow Institute of Physics and Technology](https://eng.mipt.ru/).
   
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://ahanio.github.io" # the base hostname & protocol for your site, e.g. http://example.com
